@@ -11,5 +11,21 @@
     "express": "^3.17.1",
     "moment": "^2.8.3",
     "optimist": "^0.6.1"
-  }
+  },
+  "main": "http-express.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lolkittens/http-express.git"
+  },
+  "keywords": [
+    "simple",
+    "express",
+    "cli",
+    "server"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lolkittens/http-express/issues"
+  },
+  "homepage": "https://github.com/lolkittens/http-express"
 }
