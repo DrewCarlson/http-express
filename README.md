@@ -1,6 +1,8 @@
 http-express
 ============
 
+[![NPM version](https://badge.fury.io/js/http-express.svg)](https://www.npmjs.org/package/http-express)
+
 A simple command line express3 server with no configuration required.
 
 ![Preview](http://i.imgur.com/k97EVAE.png)
