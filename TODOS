@@ -3,7 +3,7 @@
 - expandable file tree
 - quick middleware creation console
 - add http-express footer
-- fix crash when double clicking a file in the file manager
 - directory page option
 - auto pick available port if one isn't provided & default is in use
 - background mode
+- do something with files in the file tree viewer

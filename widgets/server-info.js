@@ -1,11 +1,10 @@
-module.exports = function(blessed, style) {
+module.exports = function(blessed, screen, style) {
   return blessed.box({ //TODO: make scrollable box
+    parent: screen,
     label: 'Server',
     top: '75%',
     left: '75%',
     width: '25%',
-    mouse: true,
-    keyboard: true,
     tags: true,
     border: {
       type: 'line',

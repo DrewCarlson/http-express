@@ -18,10 +18,10 @@ var style = {
   fg: '#00FFFF'
 };
 
-var serverInfoWidget = widgets.serverInfo(blessed, style);
+var serverInfoWidget = widgets.serverInfo(blessed, screen, style);
 screen.append(serverInfoWidget);
 
-var logWidget = widgets.log(blessed, style);
+var logWidget = widgets.log(blessed, screen, style);
 screen.append(logWidget);
 
 console.log = function(obj) {
@@ -32,7 +32,7 @@ console.log = function(obj) {
   logWidget.insertTop(left + timestamp + right + ' ' + obj);
 };
 
-var filesWidget = widgets.files(blessed, style);
+var filesWidget = widgets.files(blessed, screen, style);
 screen.append(filesWidget);
 
 screen.key(['escape', 'C-c'], function(ch, key) {
@@ -79,10 +79,10 @@ server.listen(config.port);
 
 //Populate server info
 serverInfoWidget.insertLine(0, utils.stylize('Local IP: ', 'cyan-fg'));
-serverInfoWidget.setLine(1, utils.stylize('Port: ', 'cyan-fg') + utils.stylize(config.port, 'white-fg'));
+serverInfoWidget.insertLine(1, utils.stylize('Port: ', 'cyan-fg') + utils.stylize(config.port, 'white-fg'));
 serverInfoWidget.insertLine(2, utils.stylize('Versions ', 'cyan-fg'));
-serverInfoWidget.setLine(3, utils.stylize(' Express: ', 'cyan-fg') + utils.stylize(pkg.express.version, 'white-fg'));
-serverInfoWidget.setLine(4, utils.stylize(' blessed: ', 'cyan-fg') + utils.stylize(pkg.blessed.version, 'white-fg'));
+serverInfoWidget.insertLine(3, utils.stylize(' Express: ', 'cyan-fg') + utils.stylize(pkg.express.version, 'white-fg'));
+serverInfoWidget.insertLine(4, utils.stylize(' blessed: ', 'cyan-fg') + utils.stylize(pkg.blessed.version, 'white-fg'));
 
 screen.render();
 

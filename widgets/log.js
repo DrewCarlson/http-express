@@ -1,10 +1,9 @@
-module.exports = function(blessed, style) {
+module.exports = function(blessed, screen, style) {
   return blessed.box({
+    parent: screen,
     label: 'Log',
     left: 'left',
     width: '75%',
-    mouse: true,
-    keyboard: true,
     tags: true,
     border: {
       type: 'line',
