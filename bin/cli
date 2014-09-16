@@ -1,0 +1,11 @@
+#!/usr/local/bin/node
+
+var argv = require('optimist')
+  .usage('Usage: --port <port>')
+  .argv;
+
+global.config = {
+  port: argv.port || 8000
+};
+
+require('../http-express');

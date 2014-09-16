@@ -1,0 +1,15 @@
+{
+  "name": "http-express",
+  "description": "A simple command line express3 server with no configuration required.",
+  "author": "Andrew Carlson",
+  "version": "0.0.1",
+  "bin": {
+    "http-express": "bin/cli"
+  },
+  "dependencies": {
+    "blessed": "0.0.37",
+    "express": "^3.17.1",
+    "moment": "^2.8.3",
+    "optimist": "^0.6.1"
+  }
+}
