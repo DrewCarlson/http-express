@@ -8,17 +8,18 @@ A simple command line express3 server with no configuration required.
 
 TODO: readme
 
+
 Install globally and use `http-express` to run
 
 ```
 $ npm install -g http-express
 ```
 
-Usage:
+
+Options:
+
+  --help  Display this message.
   
-  --port <port> Specify what port to use, default 8000
-  --path <directory> Specify a custom working directory, defaults to cwd
+  --port  Set a custom port. [default: 8000]
 
-
-
-Don't double click on file names or it will crash
+  --path  Set the current working directory. [default: "./"]
