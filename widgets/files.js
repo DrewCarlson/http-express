@@ -16,7 +16,8 @@ module.exports = function(blessed, style) {
   fileManager.on('file', function() {
     console.log(arguments);
   });
-  fileManager.pick(process.cwd());
+
+  fileManager.refresh(config.path, function() {});
 
   return fileManager;
 };

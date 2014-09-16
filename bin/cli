@@ -1,11 +1,23 @@
 #!/usr/local/bin/node
 
+var path = require('path'),
+  fs = require('fs');
+
 var argv = require('optimist')
-  .usage('Usage: --port <port>')
+  .usage('--port <port>')
+  .usage('--path <directory>')
   .argv;
 
+if (argv.path) {
+  argv.path = path.normalize(argv.path);
+  if (!fs.existsSync(argv.path)) {
+    argv.path = null;
+  }
+}
+
 global.config = {
-  port: argv.port || 8000
+  port: argv.port || 8000,
+  path: argv.path || process.cwd()
 };
 
 require('../http-express');

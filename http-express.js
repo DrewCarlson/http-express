@@ -45,7 +45,7 @@ server.configure(function() {
     var dolog = true;
 
     var status = stylize(200, 'green-fg');
-    var filePath = path.join(process.cwd(), req.url);
+    var filePath = path.join(config.path, req.url);
 
     if (!fs.existsSync(filePath) || req.url === '/') {
       status = utils.stylize(404, 'red-fg');
@@ -70,7 +70,7 @@ server.configure(function() {
     next();
   });
 
-  server.use(express.static(process.cwd()));
+  server.use(express.static(config.path));
 });
 
 server.listen(config.port);
