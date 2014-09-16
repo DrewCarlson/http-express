@@ -3,21 +3,37 @@
 var path = require('path'),
   fs = require('fs');
 
-var argv = require('optimist')
-  .usage('--port <port>')
-  .usage('--path <directory>')
-  .argv;
+var optimist = require('optimist')
+  .option('help', {
+    usage: '--help',
+    describe: 'Display this message.'
+  })
+  .option('port', {
+    default: 8000,
+    usage: '--port <port>',
+    describe: 'Set a custom port.'
+  })
+  .option('path', {
+    default: process.cwd(),
+    usage: '--path <directory>',
+    describe: 'Set the current working directory.'
+  });
 
-if (argv.path) {
-  argv.path = path.normalize(argv.path);
-  if (!fs.existsSync(argv.path)) {
-    argv.path = null;
-  }
+var argv = optimist.argv;
+
+if (argv.help) {
+  optimist.showHelp();
+  process.exit(0);
+}
+
+argv.path = path.normalize(argv.path);
+if (!fs.existsSync(argv.path)) {
+  argv.path = process.cwd();
 }
 
 global.config = {
-  port: argv.port || 8000,
-  path: argv.path || process.cwd()
+  port: argv.port,
+  path: argv.path
 };
 
 require('../http-express');
