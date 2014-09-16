@@ -13,6 +13,7 @@
     "optimist": "^0.6.1"
   },
   "main": "http-express.js",
+  "preferGlobal": "true",
   "repository": {
     "type": "git",
     "url": "https://github.com/lolkittens/http-express.git"
