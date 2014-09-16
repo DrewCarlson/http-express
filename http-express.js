@@ -38,6 +38,14 @@ screen.append(serverInfoWidget);
 var logWidget = widgets.log(blessed, style);
 screen.append(logWidget);
 
+console.log = function(obj) {
+    var timestamp = stylize(moment().format('h:mm:ss A'), 'white-fg');
+    var left = stylize('[', 'magenta-fg');
+    var right = stylize(']', 'magenta-fg');
+
+  logWidget.insertTop(left + timestamp + right + ' ' + obj);
+};
+
 var filesWidget = widgets.files(blessed, style);
 screen.append(filesWidget);
 
@@ -69,15 +77,7 @@ server.configure(function() {
     }
 
     if (dolog) {
-      var timeStamp = moment().format('h:mm:ss A');
-
-      var parts = {
-        timestamp: stylize(timeStamp, 'white-fg'),
-        left: stylize('[', 'magenta-fg'),
-        right: stylize(']', 'magenta-fg')
-      };
-
-      logWidget.insertTop(closure.left + timestamp + closure.right + ' ' + req.method + ' ' + status + ' - ' + stylize(req.url, 'white-fg'));
+      console.log(req.method + ' ' + status + ' - ' + stylize(req.url, 'white-fg'));
       screen.render();
     }
 
