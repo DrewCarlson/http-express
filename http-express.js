@@ -42,27 +42,29 @@ screen.key(['escape', 'C-c'], function(ch, key) {
 //Server setup
 server.configure(function() {
   server.use(function(req, res, next) {
-    var dolog = true;
+    var logMessage = true;
 
-    var status = stylize(200, 'green-fg');
+    var status = utils.stylize(200, 'green-fg'),
+      errStatus = utils.stylize(404, 'red-fg');
+
     var filePath = path.join(config.path, req.url);
 
-    if (!fs.existsSync(filePath) || req.url === '/') {
-      status = utils.stylize(404, 'red-fg');
+    if (req.url !== '/' && !fs.existsSync(filePath)) {
+      status = errStatus;
     }
 
     if (req.url === '/' && fs.existsSync(filePath + 'index.html') ) {
-      req.url = '/index.html'
-      status = utils.stylize(200, 'green-fg');
+      req.url = '/index.html';
     } else if (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory()) {
       if (/\/$/.test(req.url)) {
-        status = utils.stylize(404, 'red-fg');
+        status = errStatus;
       } else {
-        dolog = false;
+        //Skip directory / redirect message
+        logMessage = false;
       }
     }
 
-    if (dolog) {
+    if (logMessage) {
       console.log(req.method + ' ' + status + ' - ' + utils.stylize(req.url, 'white-fg'));
       screen.render();
     }
