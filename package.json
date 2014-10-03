@@ -2,7 +2,7 @@
   "name": "http-express",
   "description": "A simple command line express3 server with no configuration required.",
   "author": "Andrew Carlson",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "bin": {
     "http-express": "bin/cli"
   },
