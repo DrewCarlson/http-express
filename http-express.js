@@ -40,40 +40,28 @@ screen.key(['escape', 'C-c'], function(ch, key) {
 });
 
 //Server setup
-server.configure(function() {
-  server.use(function(req, res, next) {
-    var logMessage = true;
+server.use(function(req, res, next) {
+  var logMessage = true;
 
-    var status = utils.stylize(200, 'green-fg'),
-      errStatus = utils.stylize(404, 'red-fg');
+  var status = utils.stylize(200, 'green-fg'),
+    errStatus = utils.stylize(404, 'red-fg');
 
-    var filePath = path.join(config.path, req.url);
+  var filePath = path.join(config.path, req.url);
 
-    if (req.url !== '/' && !fs.existsSync(filePath)) {
-      status = errStatus;
-    }
+  if (req.url !== '/' && !fs.existsSync(filePath)) {
+    status = errStatus;
+  }
 
-    if (req.url === '/' && fs.existsSync(filePath + 'index.html') ) {
-      req.url = '/index.html';
-    } else if (fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory()) {
-      if (/\/$/.test(req.url)) {
-        status = errStatus;
-      } else {
-        //Skip directory / redirect message
-        logMessage = false;
-      }
-    }
+  if (logMessage) {
+    console.log(req.method + ' ' + status + ' - ' + utils.stylize(req.url, 'white-fg'));
+    screen.render();
+  }
 
-    if (logMessage) {
-      console.log(req.method + ' ' + status + ' - ' + utils.stylize(req.url, 'white-fg'));
-      screen.render();
-    }
-
-    next();
-  });
-
-  server.use(express.static(config.path));
+  next();
 });
+
+server.use(express.static(config.path));
+server.use(express.directory(config.path));
 
 server.listen(config.port);
 
