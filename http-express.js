@@ -7,7 +7,8 @@ var express = require('express'),
     express: require('./node_modules/express/package.json'),
     blessed: require('./node_modules/blessed/package.json')
   },
-  utils = require('./utils');
+  utils = require('./utils'),
+  http = require('http');
 
 var moment = require('moment'),
   blessed = require('blessed'),
@@ -24,6 +25,7 @@ screen.append(serverInfoWidget);
 var logWidget = widgets.log(blessed, screen, style);
 screen.append(logWidget);
 
+console.oLog = console.log;
 console.log = function(obj) {
   var timestamp = utils.stylize(moment().format('h:mm:ss A'), 'white-fg');
   var left = utils.stylize('[', 'magenta-fg');
@@ -77,4 +79,30 @@ screen.render();
 require('dns').lookup(require('os').hostname(), function (error, address) {
   serverInfoWidget.setLine(0, utils.stylize('Local IP: ', 'cyan-fg') + utils.stylize(address, 'white-fg'));
   screen.render();
-})
+});
+
+var newVersion = '';
+
+http.get('http://registry.npmjs.org/' + pkg.httpExpress.name, function(res){
+    var data = '';
+
+    res.on('data', function (chunk){
+        data += chunk;
+    });
+
+    res.on('end', function(err) {
+      if (!err) {
+        var registryInfo = JSON.parse(data);
+
+        if (registryInfo["dist-tags"].latest !== pkg.httpExpress.version) {
+          newVersion = registryInfo["dist-tags"].latest;
+        } 
+      }
+    });
+});
+
+process.on('exit', function(code) {
+  if (newVersion) {
+    console.oLog("A new version of http-express is available, run `npm update http-express` to get %s", newVersion);
+  }
+});
